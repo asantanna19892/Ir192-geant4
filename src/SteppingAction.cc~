@@ -1,0 +1,497 @@
+//
+// ********************************************************************
+// * DISCLAIMER                                                       *
+// *                                                                  *
+// * The following disclaimer summarizes all the specific disclaimers *
+// * of contributors to this software. The specific disclaimers,which *
+// * govern, are listed with their locations in:                      *
+// *   http://cern.ch/geant4/license                                  *
+// *                                                                  *
+// * Neither the authors of this software system, nor their employing *
+// * institutes,nor the agencies providing financial support for this *
+// * work  make  any representation or  warranty, express or implied, *
+// * regarding  this  software system or assume any liability for its *
+// * use.                                                             *
+// *                                                                  *
+// * This  code  implementation is the  intellectual property  of the *
+// * GEANT4 collaboration.                                            *
+// * By copying,  distributing  or modifying the Program (or any work *
+// * based  on  the Program)  you indicate  your  acceptance of  this *
+// * statement, and all its terms.                                    *
+// ********************************************************************
+//
+//
+// $Id: ExN03SteppingAction.cc,v 1.8 2003/09/15 15:38:18 maire Exp $
+// GEANT4 tag $Name: geant4-06-00 $
+//
+// 
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+#include "SteppingAction.hh"
+#include "G4Material.hh"
+#include "DetectorConstruction.hh"
+//#include "ExN03EventAction.hh"
+#include "G4Track.hh"
+#include "FontePosition.hh"
+#ifdef G4ANALYSIS_USE
+#include "RemSimAnalysisManager.hh"
+#endif
+
+
+G4int conta=0;
+
+
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+//ExN03SteppingAction::ExN03SteppingAction(ExN03DetectorConstruction* det,
+//                                         ExN03EventAction* evt, G4double* rmy)
+
+SteppingAction::SteppingAction(DetectorConstruction* det)
+  :detector(det)
+{
+
+ }
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+SteppingAction::~SteppingAction()
+{ }
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+void SteppingAction::UserSteppingAction(const G4Step* aStep)
+{
+
+ const G4ThreeVector ponto = aStep->GetTrack()->GetPosition();
+
+  const G4Track* treko = aStep->GetTrack();
+
+  //G4double edep = aStep->GetTotalEnergyDeposit();
+
+  //G4cout<<"####################### ENERGIA  ###########"<< edep <<G4endl;
+
+#ifdef G4ANALYSIS_USE
+
+  // G4double steplength= aStep->GetStepLength();
+
+  RemSimAnalysisManager* analysis = RemSimAnalysisManager::getInstance();
+  G4double edep = aStep->GetTotalEnergyDeposit();
+
+   //G4Material* defMat aStep->GetTrack()->GetMaterial()
+   G4String matName = aStep->GetTrack()->GetMaterial()->GetName();
+
+
+ // G4int  Nfotons=1;
+ // G4double J=1/1.6E-13;  //1/0.0000000000016;   //fator de conversao de Mev -> Joule e de 1/g -> 1/Kg
+
+
+
+
+//G4double cpn =treko->GetVolume()->GetCopyNo();
+//G4double iy =treko->GetReplicaNumber(0)
+
+G4ThreeVector posIni = PosInicialFonte->GetPosition();
+G4double posFonteZ = posIni.z();
+G4double posFonteY = posIni.y();
+G4double posFonteX = posIni.x();
+
+
+//G4cout<<"####################### POS Z  ###########  "<< posFonteZ  << " mm "<< posFonteZ/3 << "voxels"<< G4endl;
+
+G4double X,Y,Z=0;
+
+X=ponto.x();
+Y=ponto.y();
+Z=ponto.z();
+
+
+
+	
+
+//descobre em que voxel estamos
+
+G4double Xsize,Ysize,Zsize,VoxelSize;
+
+VoxelSize=3.6*mm;
+Xsize=192;
+Ysize=96;
+Zsize=498;
+
+
+
+G4int Xi, Yj, Zk;
+
+
+Xi=((X+(Xsize*VoxelSize/2*mm)) / VoxelSize)+1;
+Yj=((Y+(Ysize*VoxelSize/2*mm)) / VoxelSize)+1;
+Zk=((Z+(Zsize*VoxelSize/2*mm)) / VoxelSize)+1;
+
+
+G4int Z0,Y0,X0,deltaX;
+
+
+deltaX=3;
+
+
+
+
+
+
+//Z0=(Zsize)/2;
+//Y0=(Ysize/2)+1;
+//X0=(Xsize/2)-1 -9*3;
+
+
+
+
+
+
+///////////////////////////////
+//ALtura dos detetores em Z
+//////////////////////////////
+
+
+
+Z0=((((posFonteZ-(VoxelSize/2)*mm) +(Zsize*VoxelSize/2*mm)) / VoxelSize)+1);
+
+Y0=((((posFonteY-(VoxelSize/2)*mm) +(Ysize*VoxelSize/2*mm)) / VoxelSize)+1);
+
+X0=((((posFonteX-(VoxelSize/2)*mm) +(Xsize*VoxelSize/2*mm)) / VoxelSize)+1) -1 -9*3;
+
+
+
+//G4cout <<X0 << " ," <<Y0 <<" ," <<Z0 <<" ################################################################"<<G4endl;
+	
+
+
+	
+
+
+//DOSE NOS ORGÂOS
+G4int  Nfotons=1;
+  G4double J=1/1.6E-10;
+
+
+		if (edep>0 and Zk==Z0){
+			G4double densityMat = aStep->GetTrack()->GetMaterial()->GetDensity();
+			G4double massa= 0.04666*(densityMat/g*cm3);// volume em cm3 multiplicado pela massa em g/cm3
+			G4double dose=(edep/J)/massa; // dose em J/g
+			analysis -> FillMomentumComp2D(Xi,Yj,dose*1e10);
+			}
+
+
+  /* 
+
+     if(treko->GetVolume()->GetName()=="testes"){
+       analysis -> DoseDepositStore(1,(edep/J)/(71.76*Nfotons) );
+ 	}
+      if(treko->GetVolume()->GetName()=="bone marrow"){
+      analysis ->DoseDepositStore(2 ,(edep/J)/(1429*Nfotons) );
+   	}
+
+      if(treko->GetVolume()->GetName()=="colon"){
+      analysis ->DoseDepositStore(3,(edep/J)/(878.6*Nfotons));
+//	
+     	}
+      if(treko->GetVolume()->GetName()=="lungs"){
+	analysis -> DoseDepositStore(4,(edep/J)/(756.5*Nfotons));
+	//analysis->sumSteps(10,steplength/mm);
+     }
+     if(treko->GetVolume()->GetName()=="stomach"){
+        analysis -> DoseDepositStore(5,(edep/J)/(246.7*Nfotons));
+	//analysis->sumSteps(17,steplength/mm);
+
+     }
+       if(treko->GetVolume()->GetName()=="bladder"){
+	analysis -> DoseDepositStore(6,(edep/J)/(152.7*Nfotons ));
+//	analysis->sumSteps(40,steplength/mm);
+     }
+     if(treko->GetVolume()->GetName()=="liver"){
+       analysis -> DoseDepositStore(7,(edep/J)/(1448*Nfotons));
+	//analysis->sumSteps(12,steplength/mm);
+
+     }
+     if(treko->GetVolume()->GetName()=="esophagus"){
+	analysis ->DoseDepositStore(8,(edep/J)/(30.85*Nfotons));
+	//analysis->sumSteps(16,steplength/mm);
+     }
+      if(treko->GetVolume()->GetName()=="thyroid"){
+	analysis -> DoseDepositStore(9 ,(edep/J)/(5.144*Nfotons));
+ //	analysis->sumSteps(28,steplength/mm);
+    }
+     if(treko->GetVolume()->GetName()=="skin"){
+       analysis -> DoseDepositStore(10,((edep/J)/(6676*Nfotons)));
+    }
+
+
+
+
+
+
+//////////////////////////////////   BONES   /////////////////////////////////////////
+
+
+     if(treko->GetVolume()->GetName()=="skull"){
+       analysis ->DoseDepositStore(11,(edep/J)/(12495*Nfotons));
+       //analysis->sumSteps(4,steplength/mm);
+     }
+     if(treko->GetVolume()->GetName()=="spine"){
+       analysis ->DoseDepositStore(11,(edep/J)/(12495*Nfotons));
+       //analysis->sumSteps(5,steplength/mm);
+     }
+     if(treko->GetVolume()->GetName()=="rib cage & Sternum"){
+	analysis ->DoseDepositStore(11,(edep/J)/(12495*Nfotons));
+	//analysis->sumSteps(6,steplength/mm);
+     }
+     if(treko->GetVolume()->GetName()=="pelvis"){
+       analysis ->DoseDepositStore(11,(edep/J)/(12495*Nfotons));
+	//analysis->sumSteps(7,steplength/mm);
+
+     }
+ if(treko->GetVolume()->GetName()=="long bones"){
+       analysis -> DoseDepositStore(11,(edep/J)/(12495*Nfotons));
+	//analysis->sumSteps(7,steplength/mm);
+     }
+
+     if(treko->GetVolume()->GetName()=="dens of axis"){
+       analysis -> DoseDepositStore(11,(edep/J)/(12495*Nfotons));
+	//analysis->sumSteps(8,steplength/mm);
+    } 
+
+    if(treko->GetVolume()->GetName()=="jaw bone"){
+       analysis -> DoseDepositStore(11,(edep/J)/(12495*Nfotons));
+	//analysis->sumSteps(8,steplength/mm);
+}
+    if(treko->GetVolume()->GetName()=="hard palate"){
+       analysis -> DoseDepositStore(11,(edep/J)/(12495*Nfotons));
+	//analysis->sumSteps(8,steplength/mm);
+    } 
+    if(treko->GetVolume()->GetName()=="nasal septum"){
+       analysis ->DoseDepositStore(11,(edep/J)/(12495*Nfotons));
+	//analysis->sumSteps(8,steplength/mm);
+    } 
+
+   if(treko->GetVolume()->GetName()=="uncus"){
+       analysis -> DoseDepositStore(11,(edep/J)/(12495*Nfotons));
+	//analysis->sumSteps(8,steplength/mm);
+    } 
+
+    if(treko->GetVolume()->GetName()=="turbinates"){
+       analysis -> DoseDepositStore(11,(edep/J)/(12495*Nfotons));
+	//analysis->sumSteps(8,steplength/mm);
+    } 
+
+
+
+
+      if(treko->GetVolume()->GetName()=="adrenals"){
+	analysis ->DoseDepositStore(12 ,(edep/J)/(3.037*Nfotons) );
+//	analysis->sumSteps(21,steplength/mm);
+
+     }
+
+
+
+
+///////////////////////// BRAIN///////////////////////////////////////////
+
+
+     if(treko->GetVolume()->GetName()=="brain"){
+       analysis ->DoseDepositStore(13,((edep/J)/(1749*Nfotons)));
+	//analysis->sumSteps(2,steplength/mm);
+     }
+
+    if(treko->GetVolume()->GetName()=="cerebellum"){
+       analysis ->DoseDepositStore(13,((edep/J)/(1749*Nfotons)));
+	//analysis->sumSteps(2,steplength/mm);
+     }
+    if(treko->GetVolume()->GetName()=="white matter"){
+       analysis ->DoseDepositStore(13,((edep/J)/(1749*Nfotons)));
+	//analysis->sumSteps(2,steplength/mm);
+     }
+if(treko->GetVolume()->GetName()=="medula oblongata"){
+       analysis ->DoseDepositStore(13,((edep/J)/(1749*Nfotons)));
+	//analysis->sumSteps(2,steplength/mm);
+     }
+
+    if(treko->GetVolume()->GetName()=="frontal lobes"){
+       analysis ->DoseDepositStore(13,((edep/J)/(1749*Nfotons)));
+	//analysis->sumSteps(2,steplength/mm);
+     }
+    if(treko->GetVolume()->GetName()=="pons"){
+       analysis ->DoseDepositStore(13,((edep/J)/(1749*Nfotons)));
+	//analysis->sumSteps(2,steplength/mm);
+     }
+    if(treko->GetVolume()->GetName()=="third ventricle"){
+       analysis -> DoseDepositStore(13,((edep/J)/(1749*Nfotons)));
+	//analysis->sumSteps(2,steplength/mm);
+     }
+    if(treko->GetVolume()->GetName()=="occipital lobes"){
+       analysis -> DoseDepositStore(13,((edep/J)/(1749*Nfotons)));
+	//analysis->sumSteps(2,steplength/mm);
+     }
+    if(treko->GetVolume()->GetName()=="hippocampus"){
+       analysis -> DoseDepositStore(13,((edep/J)/(1749*Nfotons)));
+	//analysis->sumSteps(2,steplength/mm);
+     }
+    if(treko->GetVolume()->GetName()=="caudate nucleus"){
+       analysis -> DoseDepositStore(13,((edep/J)/(1749*Nfotons)));
+	//analysis->sumSteps(2,steplength/mm);
+     }
+    if(treko->GetVolume()->GetName()=="insula cortex"){
+       analysis ->DoseDepositStore(13,((edep/J)/(1749*Nfotons)));
+	//analysis->sumSteps(2,steplength/mm);
+     }
+    if(treko->GetVolume()->GetName()=="putamen"){
+       analysis -> DoseDepositStore(13,((edep/J)/(1749*Nfotons)));
+	//analysis->sumSteps(2,steplength/mm);
+     }
+    if(treko->GetVolume()->GetName()=="internal capsule"){
+       analysis -> DoseDepositStore(13,((edep/J)/(1749*Nfotons)));
+	//analysis->sumSteps(2,steplength/mm);
+     }
+    if(treko->GetVolume()->GetName()=="septum pellucidium"){
+       analysis ->DoseDepositStore(13,((edep/J)/(1749*Nfotons)));
+	//analysis->sumSteps(2,steplength/mm);
+     }
+    if(treko->GetVolume()->GetName()=="thalamus"){
+       analysis ->DoseDepositStore(13,((edep/J)/(1749*Nfotons)));
+	//analysis->sumSteps(2,steplength/mm);
+     }
+    if(treko->GetVolume()->GetName()=="corpus collosum"){
+       analysis -> DoseDepositStore (13,((edep/J)/(1749*Nfotons)));
+	//analysis->sumSteps(2,steplength/mm);
+     }
+    if(treko->GetVolume()->GetName()=="special region frontal lobes"){
+       analysis -> DoseDepositStore(13,((edep/J)/(1749*Nfotons)));
+	//analysis->sumSteps(2,steplength/mm);
+     }
+    if(treko->GetVolume()->GetName()=="cerebral fax"){
+       analysis -> DoseDepositStore(13,((edep/J)/(1749*Nfotons)));
+	//analysis->sumSteps(2,steplength/mm);
+     }
+    if(treko->GetVolume()->GetName()=="temporal lobes"){
+       analysis -> DoseDepositStore(13,((edep/J)/(1749*Nfotons)));
+	//analysis->sumSteps(2,steplength/mm);
+     }
+    if(treko->GetVolume()->GetName()=="fourth ventricle"){
+       analysis -> DoseDepositStore(13,((edep/J)/(1749*Nfotons)));
+	//analysis->sumSteps(2,steplength/mm);
+     }
+    if(treko->GetVolume()->GetName()=="frontal portion eyes"){
+       analysis -> DoseDepositStore(13,((edep/J)/(1749*Nfotons)));
+	//analysis->sumSteps(2,steplength/mm);
+     }
+    if(treko->GetVolume()->GetName()=="parietal lobes"){
+       analysis ->DoseDepositStore(13,((edep/J)/(1749*Nfotons)));
+	//analysis->sumSteps(2,steplength/mm);
+     }
+    if(treko->GetVolume()->GetName()=="amygdala"){
+       analysis -> DoseDepositStore(13,((edep/J)/(1749*Nfotons)));
+	//analysis->sumSteps(2,steplength/mm);
+     }
+    if(treko->GetVolume()->GetName()=="globus pallidus"){
+       analysis -> DoseDepositStore(13,((edep/J)/(1749*Nfotons)));
+	//analysis->sumSteps(2,steplength/mm);
+     }
+    if(treko->GetVolume()->GetName()=="cerebral aquaduct"){
+       analysis ->DoseDepositStore(13,((edep/J)/(1749*Nfotons)));
+	//analysis->sumSteps(2,steplength/mm);
+     }
+    if(treko->GetVolume()->GetName()=="lateral ventricles"){
+       analysis ->DoseDepositStore(13,((edep/J)/(1749*Nfotons)));
+	//analysis->sumSteps(2,steplength/mm);
+     }
+    if(treko->GetVolume()->GetName()=="prefrontal lobes"){
+       analysis -> DoseDepositStore(13,((edep/J)/(1749*Nfotons)));
+	//analysis->sumSteps(2,steplength/mm);
+     }
+
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+    if(treko->GetVolume()->GetName()=="small bowel"){
+       analysis -> DoseDepositStore(14,(edep/J)/(1271*Nfotons));
+       //analysis -> DoseDepositStore(15,(edep/J)/(1671*Nfotons));
+//	analysis->sumSteps(18,steplength/mm);
+     }
+
+    if(treko->GetVolume()->GetName()=="colon"){
+       analysis -> DoseDepositStore(15,(edep/J)/(879*Nfotons));
+//	analysis->sumSteps(18,steplength/mm);
+     }
+
+
+
+     if(treko->GetVolume()->GetName()=="kidneys"){
+       analysis -> DoseDepositStore(16,(edep/J)/(373.2*Nfotons));
+	//analysis->sumSteps(14,steplength/mm);
+     }
+
+      if(treko->GetVolume()->GetName()=="skeletal muscle"){
+	analysis -> DoseDepositStore(17,(edep/J)/(36067*Nfotons));
+	//analysis->sumSteps(9,steplength/mm);
+     }
+      if(treko->GetVolume()->GetName()=="pancreas"){
+	analysis -> DoseDepositStore(18,(edep/J)/(38.43*Nfotons));
+//	analysis->sumSteps(20,steplength/mm);
+
+     }
+      if(treko->GetVolume()->GetName()=="spleen"){      //baço){
+	analysis -> DoseDepositStore(19,(edep/J)/(275.4*Nfotons) );
+  //	analysis->sumSteps(31,steplength/mm);
+   }
+      if(treko->GetVolume()->GetName()=="lens"){
+	analysis -> DoseDepositStore(20,(edep/J)/(0.3994*Nfotons) );
+//G4cout << " " << ponto->GetPosition().x() << "        " << ponto->GetPosition().y() << "         " << ponto->GetPosition().z() << G4endl;
+   }
+
+
+
+   if(treko->GetVolume()->GetName()=="prostate"){
+	analysis -> DoseDepositStore(35 ,(edep/J)/(21.05*Nfotons) );
+	//	analysis->sumSteps(35,steplength/mm);
+   }
+
+      if(treko->GetVolume()->GetName()=="rectum"){
+	analysis -> DoseDepositStore(36,(edep/J)/(70.50*Nfotons) );
+//	analysis->sumSteps(37,steplength/mm);
+     }
+
+      if(treko->GetVolume()->GetName()=="bladder"){
+	analysis -> DoseDepositStore(37,(edep/J)/(152.7*Nfotons ));
+//	analysis->sumSteps(40,steplength/mm);
+     }
+
+*/
+
+#endif
+}
+
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+

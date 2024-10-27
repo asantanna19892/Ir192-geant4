@@ -1,0 +1,12 @@
+     =========================================================
+     Geant4 - an Object-Oriented Toolkit for Simulation in HEP
+     =========================================================
+
+                            Example ird09
+                            -----------
+
+Built upon example ird08.
+
+A more sophisticated example of a geometrical element. G4CutsTube.
+
+

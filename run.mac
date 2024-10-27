@@ -1,0 +1,16 @@
+# Macro file for example IRD03
+# 
+# Can be run in batch, without graphic
+# or interactively: Idle> /control/execute run.mac
+#
+# Initialize kernel
+/run/initialize
+
+#Verbose options
+/control/verbose 1
+/run/verbose 1
+/event/verbose 0
+/tracking/verbose 0
+
+#
+/run/beamOn 1000000

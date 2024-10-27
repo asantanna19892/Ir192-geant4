@@ -1,0 +1,81 @@
+#include "DetectorConstruction.hh"
+#include "G4NistManager.hh"
+#include "G4SystemOfUnits.hh"
+#include "G4PhysicalConstants.hh"
+#include "G4Box.hh"
+#include "G4Tubs.hh"
+#include "G4CutTubs.hh"
+#include "G4Sphere.hh"
+#include "G4VPhysicalVolume.hh"
+#include "G4LogicalVolume.hh"
+#include "G4PVPlacement.hh"
+
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+DetectorConstruction::DetectorConstruction()
+: G4VUserDetectorConstruction()
+{ }
+
+DetectorConstruction::~DetectorConstruction()
+{ }
+
+G4VPhysicalVolume* DetectorConstruction::Construct()
+{  
+  // Get nist material manager
+  G4NistManager* nist = G4NistManager::Instance();
+  G4Material* H2O  = nist->FindOrBuildMaterial("G4_WATER");
+  G4Material* Air  = nist->FindOrBuildMaterial("G4_AIR");
+
+  G4bool checkOverlaps = true;
+
+  //     
+  // World
+  //
+  G4double world_sizeXY = 1.0*m;
+  G4double world_sizeZ  = 1.0*m;
+  
+  G4Box* solidWorld =    
+    new G4Box("World",                       //its name
+       0.5*world_sizeXY, 0.5*world_sizeXY, 0.5*world_sizeZ);     //its size
+      
+  G4LogicalVolume* logicWorld =                         
+    new G4LogicalVolume(solidWorld,          //its solid
+                        Air,           //its material
+                        "World");            //its name
+                                   
+  G4VPhysicalVolume* physWorld = 
+    new G4PVPlacement(0,                     //no rotation
+                      G4ThreeVector(),       //at (0,0,0)
+                      logicWorld,            //its logical volume
+                      "World",               //its name
+                      0,                     //its mother  volume
+                      false,                 //no boolean operation
+                      0,                     //copy number
+                      checkOverlaps);        //overlaps checking
+
+
+  G4double pRMin = 12*cm;
+  G4double pRMax = 20*cm;
+  G4double pDz = 30*cm;
+  G4double pSPhi = 0;
+  G4double pDPhi = 1.5*pi;
+  G4ThreeVector pLowNorm;
+  //  pLowNorm = G4ThreeVector(0,-0.7,-0.71);
+  //  pLowNorm = G4ThreeVector(0,-0.5,-0.6);
+  pLowNorm = G4ThreeVector(0,0,-1);
+  G4ThreeVector pHighNorm = G4ThreeVector(0.7,0,0.71);
+
+  G4CutTubs* solidPipe = new G4CutTubs( "solid_pipe", pRMin, pRMax, pDz, pSPhi, pDPhi, pLowNorm, pHighNorm );
+  
+  G4LogicalVolume* logicPipe = new G4LogicalVolume(solidPipe, H2O, "logic_pipe");
+  G4VPhysicalVolume* physPipe = new G4PVPlacement(0,                       G4ThreeVector(),       //at (0,0,0)
+                      logicPipe,            //its logical volume
+                      "physical_pipe",               //its name
+                      logicWorld,                     //its mother  volume
+                      false,                 //no boolean operation
+                      0,                     //copy number
+                      checkOverlaps);        //overlaps checking
+  
+  return physWorld;
+}

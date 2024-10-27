@@ -29,7 +29,10 @@ RunAction::~RunAction()
 void RunAction::BeginOfRunAction(const G4Run*)
 {
   G4RunManager::GetRunManager()->SetRandomNumberStore(false);
-
+  fEdepAnel1 = 0.;
+  fEdep2Anel1 = 0.;
+  fEdepAnel2 = 0.;
+  fEdep2Anel2 = 0.;
 }
 
 void RunAction::EndOfRunAction(const G4Run* run)
@@ -84,6 +87,7 @@ void RunAction::EndOfRunAction(const G4Run* run)
      << " Cumulated dose per run, in scoring volume (Anel 2): " 
      << G4BestUnit(doseAnel2,"Dose") << " rms = " << G4BestUnit(rmsDoseAnel2,"Dose")
      << G4endl;
+     
 }
 
 void RunAction::AddEdepAnel1(G4double edep)

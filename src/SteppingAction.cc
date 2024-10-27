@@ -40,7 +40,7 @@
 #include "DetectorConstruction.hh"
 #include "G4Track.hh"
 #include "FontePosition.hh"
-
+#include "G4UnitsTable.hh"
 #ifdef G4ANALYSIS_USE
 #include "RemSimAnalysisManager.hh"
 #endif
@@ -82,10 +82,12 @@ void SteppingAction::UserSteppingAction(const G4Step* step)
                     ->GetVolume()->GetLogicalVolume();
 
      // check if we are in scoring volume
-     if (volume != fScoringVolume1 || volume != fScoringVolume2) return;
+     if (volume != fScoringVolume1 && volume != fScoringVolume2) return;
 
      // collect energy deposited in this step
      G4double edepStep = step->GetTotalEnergyDeposit();
+     
+
      if (volume == fScoringVolume1) {
         fEventAction->AddEdepAnel1(edepStep);  // Acumula energia no primeiro anel
      } else if (volume == fScoringVolume2) {

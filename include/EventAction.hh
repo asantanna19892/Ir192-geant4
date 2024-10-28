@@ -50,12 +50,31 @@ class EventAction : public G4UserEventAction
     // Métodos para adicionar energia nos dois anéis
     void AddEdepAnel1(G4double edep) { fEdepAnel1 += edep; }
     void AddEdepAnel2(G4double edep) { fEdepAnel2 += edep; }
-
+    void AddEdepAnel3(G4double edep) { fEdepAnel3 += edep; }
+    void AddEdepAnel4(G4double edep) { fEdepAnel4 += edep; }
+    void AddEdepAnel5(G4double edep) { fEdepAnel5 += edep; }
+    void AddEdepAnel6(G4double edep) { fEdepAnel6 += edep; }
+    void AddEdepAnel7(G4double edep) { fEdepAnel7 += edep; }
+    void AddEdepAnel8(G4double edep) { fEdepAnel8 += edep; }
+    void AddEdepAnel9(G4double edep) { fEdepAnel9 += edep; }
+    void AddEdepAnel10(G4double edep) { fEdepAnel10 += edep; }
+    void AddEdepAnel11(G4double edep) { fEdepAnel11 += edep; }
+    void AddEdepAnel12(G4double edep) { fEdepAnel12 += edep; }
   private:
     RunAction* fRunAction;
     // Energia depositada em cada anel
     G4double fEdepAnel1;
     G4double fEdepAnel2;
+    G4double fEdepAnel3;
+    G4double fEdepAnel4;
+    G4double fEdepAnel5;
+    G4double fEdepAnel6;
+    G4double fEdepAnel7;
+    G4double fEdepAnel8;
+    G4double fEdepAnel9;
+    G4double fEdepAnel10;
+    G4double fEdepAnel11;
+    G4double fEdepAnel12;
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

@@ -43,6 +43,29 @@ void RunAction::BeginOfRunAction(const G4Run*)
   fEdep2Anel1 = 0.;
   fEdepAnel2 = 0.;
   fEdep2Anel2 = 0.;
+  // extrapolando para todos os aneis
+  fEdepAnel3 = 0.;
+  fEdep2Anel3 = 0.;
+  fEdepAnel4 = 0.;
+  fEdep2Anel4 = 0.;
+  fEdepAnel5 = 0.;
+  fEdep2Anel5 = 0.;
+  fEdepAnel6 = 0.;
+  fEdep2Anel6 = 0.;
+  fEdepAnel7 = 0.;
+  fEdep2Anel7 = 0.;
+  fEdepAnel8 = 0.;
+  fEdep2Anel8 = 0.;
+  fEdepAnel9 = 0.;
+  fEdep2Anel9 = 0.;
+  fEdepAnel10 = 0.;
+  fEdep2Anel10 = 0.;
+  fEdepAnel11 = 0.;
+  fEdep2Anel11 = 0.;
+  fEdepAnel12 = 0.;
+  fEdep2Anel12 = 0.;
+
+
 }
 
 void RunAction::EndOfRunAction(const G4Run* run)

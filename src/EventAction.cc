@@ -39,7 +39,18 @@ EventAction::EventAction(RunAction* runAction)
 : G4UserEventAction(),
   fRunAction(runAction),
   fEdepAnel1(0.),
-  fEdepAnel2(0.)
+  fEdepAnel2(0.),
+  fEdepAnel3(0.),
+  fEdepAnel4(0.),
+  fEdepAnel5(0.),
+  fEdepAnel6(0.),
+  fEdepAnel7(0.),
+  fEdepAnel8(0.),
+  fEdepAnel9(0.),
+  fEdepAnel10(0.),
+  fEdepAnel11(0.),
+  fEdepAnel12(0.)
+  
 
 {
   
@@ -59,6 +70,16 @@ void EventAction::BeginOfEventAction(const G4Event*)
   // Inicializar a energia depositada em ambos os anéis
   fEdepAnel1 = 0.;
   fEdepAnel2 = 0.;
+  fEdepAnel3 = 0.;
+  fEdepAnel4 = 0.;
+  fEdepAnel5 = 0.;
+  fEdepAnel6 = 0.;
+  fEdepAnel7 = 0.;
+  fEdepAnel8 = 0.;
+  fEdepAnel9 = 0.;
+  fEdepAnel10 = 0.;
+  fEdepAnel11 = 0.;
+  fEdepAnel12 = 0.;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -69,6 +90,16 @@ void EventAction::EndOfEventAction(const G4Event*)
 
   fRunAction->AddEdepAnel1(fEdepAnel1);  // Acumular energia do Anel 1
   fRunAction->AddEdepAnel2(fEdepAnel2);  // Acumular energia do Anel 2
+  fRunAction->AddEdepAnel3(fEdepAnel3);  // Acumular energia do Anel 1
+  fRunAction->AddEdepAnel4(fEdepAnel4);  // Acumular energia do Anel 2
+  fRunAction->AddEdepAnel5(fEdepAnel5);  // Acumular energia do Anel 1
+  fRunAction->AddEdepAnel6(fEdepAnel6);  // Acumular energia do Anel 2
+  fRunAction->AddEdepAnel7(fEdepAnel7);  // Acumular energia do Anel 1
+  fRunAction->AddEdepAnel8(fEdepAnel8);  // Acumular energia do Anel 2
+  fRunAction->AddEdepAnel9(fEdepAnel9);  // Acumular energia do Anel 1
+  fRunAction->AddEdepAnel10(fEdepAnel10);  // Acumular energia do Anel 2
+  fRunAction->AddEdepAnel11(fEdepAnel11);  // Acumular energia do Anel 1
+  fRunAction->AddEdepAnel12(fEdepAnel12);  // Acumular energia do Anel 2
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

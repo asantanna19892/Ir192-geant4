@@ -64,6 +64,17 @@ private:
   //G4LogicalVolume* fScoringVolume;
   G4LogicalVolume* fScoringVolume1;
   G4LogicalVolume* fScoringVolume2;
+  G4LogicalVolume* fScoringVolume3;
+  G4LogicalVolume* fScoringVolume4;
+  G4LogicalVolume* fScoringVolume5;
+  G4LogicalVolume* fScoringVolume6;
+  G4LogicalVolume* fScoringVolume7;
+  G4LogicalVolume* fScoringVolume8;
+  G4LogicalVolume* fScoringVolume9;
+  G4LogicalVolume* fScoringVolume10;
+  G4LogicalVolume* fScoringVolume11;
+  G4LogicalVolume* fScoringVolume12;
+
 
 };
 

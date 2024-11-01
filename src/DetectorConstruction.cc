@@ -335,140 +335,140 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
   G4PVPlacement* sesf_fis = new G4PVPlacement(0,G4ThreeVector(posIni.x(),posIni.y(),posIni.z()-0.95*mm), sesf_log, "sesf", logicWorld, false, 0); 
 
   // anel 1
-  G4double alfa1 = 180*deg;
-  G4RotationMatrix* xRot1 = new G4RotationMatrix;
-  xRot1->rotateX(alfa1); 
+  G4double alfa = 180*deg;
+  G4RotationMatrix* xRot = new G4RotationMatrix;
+  xRot->rotateX(alfa); 
   G4double pRmin1 = 0.25*cm;
-  G4double pRmax1 = 0.35*cm;
+  G4double pRmax1 = 0.26*cm;
   pSPhi = 0*rad;
   pDPhi = (2*pi)*rad;
-  pSTheta = (25)*deg;
-  pDTheta = (27)*deg;
+  pSTheta = (90)*deg;
+  pDTheta = (2)*deg;
 
   G4Sphere* esf1 = new G4Sphere("esf1", pRmin1, pRmax1, pSPhi, pDPhi, pSTheta, pDTheta);
   G4LogicalVolume* esf_log1 = new G4LogicalVolume(esf1, H2O, "esf_log1", 0, 0, 0);
-  G4PVPlacement* esf_fis1 = new G4PVPlacement(xRot1, G4ThreeVector(0, 0, 0.0*mm), esf_log1, "esf1", logicWorld, false, 0);
+  G4PVPlacement* esf_fis1 = new G4PVPlacement(xRot, G4ThreeVector(0, 0, 0.0*mm), esf_log1, "esf1", logicWorld, false, 0);
 
   // anel 2
-  G4double alfa2 = 180*deg;
-  G4RotationMatrix* xRot2 = new G4RotationMatrix;
-  xRot2->rotateX(alfa2); 
+  //G4double alfa2 = 180*deg;
+  // G4RotationMatrix* xRot2 = new G4RotationMatrix;
+  // xRot2->rotateX(alfa1); 
   G4double pRmin2 = 0.50*cm;  // Diferente do primeiro anel
-  G4double pRmax2 = 0.60*cm;
+  G4double pRmax2 = 0.51*cm;
 
   G4Sphere* esf2 = new G4Sphere("esf2", pRmin2, pRmax2, pSPhi, pDPhi, pSTheta, pDTheta);
   G4LogicalVolume* esf_log2 = new G4LogicalVolume(esf2, H2O, "esf_log2", 0, 0, 0);
-  G4PVPlacement* esf_fis2 = new G4PVPlacement(xRot2, G4ThreeVector(0, 0, 0.0*mm), esf_log2, "esf2", logicWorld, false, 0);
+  G4PVPlacement* esf_fis2 = new G4PVPlacement(xRot, G4ThreeVector(0, 0, 0.0*mm), esf_log2, "esf2", logicWorld, false, 0);
 
  // anel 3
-  G4double alfa3 = 180*deg;
-  G4RotationMatrix* xRot3 = new G4RotationMatrix;
-  xRot3->rotateX(alfa3); 
+  //G4double alfa3 = 180*deg;
+  // G4RotationMatrix* xRot3 = new G4RotationMatrix;
+  // xRot3->rotateX(alfa1); 
   G4double pRmin3 = 1.00*cm;  // Diferente do primeiro anel
   G4double pRmax3 = 1.10*cm;
 
   G4Sphere* esf3 = new G4Sphere("esf3", pRmin3, pRmax3, pSPhi, pDPhi, pSTheta, pDTheta);
   G4LogicalVolume* esf_log3 = new G4LogicalVolume(esf3, H2O, "esf_log3", 0, 0, 0);
-  G4PVPlacement* esf_fis3 = new G4PVPlacement(xRot3, G4ThreeVector(0, 0, 0.0*mm), esf_log2, "esf3", logicWorld, false, 0);
+  G4PVPlacement* esf_fis3 = new G4PVPlacement(xRot, G4ThreeVector(0, 0, 0.0*mm), esf_log2, "esf3", logicWorld, false, 0);
 
  // anel 4
-  G4double alfa4 = 180*deg;
-  G4RotationMatrix* xRot4 = new G4RotationMatrix;
-  xRot4->rotateX(alfa4); 
+  //G4double alfa4 = 180*deg;
+  // G4RotationMatrix* xRot4 = new G4RotationMatrix;
+  // xRot4->rotateX(alfa1); 
   G4double pRmin4 = 2.00*cm;  // Diferente do primeiro anel
   G4double pRmax4 = 2.10*cm;
 
   G4Sphere* esf4 = new G4Sphere("esf4", pRmin4, pRmax4, pSPhi, pDPhi, pSTheta, pDTheta);
   G4LogicalVolume* esf_log4 = new G4LogicalVolume(esf4, H2O, "esf_log4", 0, 0, 0);
-  G4PVPlacement* esf_fis4 = new G4PVPlacement(xRot4, G4ThreeVector(0, 0, 0.0*mm), esf_log4, "esf4", logicWorld, false, 0);
+  G4PVPlacement* esf_fis4 = new G4PVPlacement(xRot, G4ThreeVector(0, 0, 0.0*mm), esf_log4, "esf4", logicWorld, false, 0);
 
  // anel 5
-  G4double alfa5 = 180*deg;
-  G4RotationMatrix* xRot5 = new G4RotationMatrix;
-  xRot5->rotateX(alfa5); 
+  //G4double alfa5 = 180*deg;
+  // G4RotationMatrix* xRot5 = new G4RotationMatrix;
+  // xRot5->rotateX(alfa1); 
   G4double pRmin5 = 3.00*cm;  // Diferente do primeiro anel
   G4double pRmax5 = 3.10*cm;
 
   G4Sphere* esf5 = new G4Sphere("esf5", pRmin5, pRmax5, pSPhi, pDPhi, pSTheta, pDTheta);
   G4LogicalVolume* esf_log5 = new G4LogicalVolume(esf5, H2O, "esf_log5", 0, 0, 0);
-  G4PVPlacement* esf_fis5 = new G4PVPlacement(xRot5, G4ThreeVector(0, 0, 0.0*mm), esf_log5, "esf5", logicWorld, false, 0);
+  G4PVPlacement* esf_fis5 = new G4PVPlacement(xRot, G4ThreeVector(0, 0, 0.0*mm), esf_log5, "esf5", logicWorld, false, 0);
 
  // anel 6
-  G4double alfa6 = 180*deg;
-  G4RotationMatrix* xRot6 = new G4RotationMatrix;
-  xRot6->rotateX(alfa6); 
+  //G4double alfa6 = 180*deg;
+  // G4RotationMatrix* xRot6 = new G4RotationMatrix;
+  // xRot6->rotateX(alfa1); 
   G4double pRmin6 = 4.00*cm;  // Diferente do primeiro anel
   G4double pRmax6 = 4.10*cm;
 
   G4Sphere* esf6 = new G4Sphere("esf6", pRmin6, pRmax6, pSPhi, pDPhi, pSTheta, pDTheta);
   G4LogicalVolume* esf_log6 = new G4LogicalVolume(esf6, H2O, "esf_log6", 0, 0, 0);
-  G4PVPlacement* esf_fis6 = new G4PVPlacement(xRot6, G4ThreeVector(0, 0, 0.0*mm), esf_log6, "esf6", logicWorld, false, 0);
+  G4PVPlacement* esf_fis6 = new G4PVPlacement(xRot, G4ThreeVector(0, 0, 0.0*mm), esf_log6, "esf6", logicWorld, false, 0);
 
  // anel 7
-  G4double alfa7 = 180*deg;
-  G4RotationMatrix* xRot7 = new G4RotationMatrix;
-  xRot7->rotateX(alfa7); 
+  //G4double alfa7 = 180*deg;
+  // G4RotationMatrix* xRot7 = new G4RotationMatrix;
+  // xRot7->rotateX(alfa1); 
   G4double pRmin7 = 5.00*cm;  // Diferente do primeiro anel
   G4double pRmax7 = 5.10*cm;
 
   G4Sphere* esf7 = new G4Sphere("esf7", pRmin7, pRmax7, pSPhi, pDPhi, pSTheta, pDTheta);
   G4LogicalVolume* esf_log7 = new G4LogicalVolume(esf7, H2O, "esf_log7", 0, 0, 0);
-  G4PVPlacement* esf_fis7 = new G4PVPlacement(xRot7, G4ThreeVector(0, 0, 0.0*mm), esf_log7, "esf7", logicWorld, false, 0);
+  G4PVPlacement* esf_fis7 = new G4PVPlacement(xRot, G4ThreeVector(0, 0, 0.0*mm), esf_log7, "esf7", logicWorld, false, 0);
 
  // anel 8
-  G4double alfa8 = 180*deg;
-  G4RotationMatrix* xRot8 = new G4RotationMatrix;
-  xRot8->rotateX(alfa8); 
+  //G4double alfa8 = 180*deg;
+  // G4RotationMatrix* xRot8 = new G4RotationMatrix;
+  // xRot8->rotateX(alfa1); 
   G4double pRmin8 = 7.50*cm;  // Diferente do primeiro anel
   G4double pRmax8 = 7.60*cm;
 
   G4Sphere* esf8 = new G4Sphere("esf8", pRmin8, pRmax8, pSPhi, pDPhi, pSTheta, pDTheta);
   G4LogicalVolume* esf_log8 = new G4LogicalVolume(esf8, H2O, "esf_log8", 0, 0, 0);
-  G4PVPlacement* esf_fis8 = new G4PVPlacement(xRot8, G4ThreeVector(0, 0, 0.0*mm), esf_log8, "esf8", logicWorld, false, 0);
+  G4PVPlacement* esf_fis8 = new G4PVPlacement(xRot, G4ThreeVector(0, 0, 0.0*mm), esf_log8, "esf8", logicWorld, false, 0);
 
  // anel 9
-  G4double alfa9 = 180*deg;
-  G4RotationMatrix* xRot9 = new G4RotationMatrix;
-  xRot2->rotateX(alfa9); 
+ // G4double alfa9 = 180*deg;
+  // G4RotationMatrix* xRot9 = new G4RotationMatrix;
+  // xRot9->rotateX(alfa1); 
   G4double pRmin9 = 10.00*cm;  // Diferente do primeiro anel
   G4double pRmax9 = 10.10*cm;
 
   G4Sphere* esf9 = new G4Sphere("esf9", pRmin9, pRmax9, pSPhi, pDPhi, pSTheta, pDTheta);
   G4LogicalVolume* esf_log9 = new G4LogicalVolume(esf9, H2O, "esf_log9", 0, 0, 0);
-  G4PVPlacement* esf_fis9 = new G4PVPlacement(xRot9, G4ThreeVector(0, 0, 0.0*mm), esf_log9, "esf9", logicWorld, false, 0);
+  G4PVPlacement* esf_fis9 = new G4PVPlacement(xRot, G4ThreeVector(0, 0, 0.0*mm), esf_log9, "esf9", logicWorld, false, 0);
 
  // anel 10
-  G4double alfa10 = 180*deg;
-  G4RotationMatrix* xRot10 = new G4RotationMatrix;
-  xRot10->rotateX(alfa10); 
+  //G4double alfa10 = 180*deg;
+  // G4RotationMatrix* xRot10 = new G4RotationMatrix;
+  // xRot10->rotateX(alfa1); 
   G4double pRmin10 = 12.50*cm;  // Diferente do primeiro anel
   G4double pRmax10 = 12.60*cm;
 
   G4Sphere* esf10 = new G4Sphere("esf10", pRmin10, pRmax10, pSPhi, pDPhi, pSTheta, pDTheta);
   G4LogicalVolume* esf_log10 = new G4LogicalVolume(esf10, H2O, "esf_log10", 0, 0, 0);
-  G4PVPlacement* esf_fis10 = new G4PVPlacement(xRot10, G4ThreeVector(0, 0, 0.0*mm), esf_log10, "esf10", logicWorld, false, 0);
+  G4PVPlacement* esf_fis10 = new G4PVPlacement(xRot, G4ThreeVector(0, 0, 0.0*mm), esf_log10, "esf10", logicWorld, false, 0);
 
  // anel 11
-  G4double alfa11 = 180*deg;
-  G4RotationMatrix* xRot11 = new G4RotationMatrix;
-  xRot2->rotateX(alfa11); 
+ // G4double alfa11 = 180*deg;
+  // G4RotationMatrix* xRot11 = new G4RotationMatrix;
+  // xRot11->rotateX(alfa1); 
   G4double pRmin11 = 15.00*cm;  // Diferente do primeiro anel
   G4double pRmax11 = 15.10*cm;
 
   G4Sphere* esf11 = new G4Sphere("esf11", pRmin11, pRmax11, pSPhi, pDPhi, pSTheta, pDTheta);
   G4LogicalVolume* esf_log11 = new G4LogicalVolume(esf11, H2O, "esf_log11", 0, 0, 0);
-  G4PVPlacement* esf_fis11 = new G4PVPlacement(xRot11, G4ThreeVector(0, 0, 0.0*mm), esf_log11, "esf11", logicWorld, false, 0);
+  G4PVPlacement* esf_fis11 = new G4PVPlacement(xRot, G4ThreeVector(0, 0, 0.0*mm), esf_log11, "esf11", logicWorld, false, 0);
 
  // Segundo anel 12
-  G4double alfa12 = 180*deg;
-  G4RotationMatrix* xRot12 = new G4RotationMatrix;
-  xRot2->rotateX(alfa12); 
+  //G4double alfa12 = 180*deg;
+  // G4RotationMatrix* xRot12 = new G4RotationMatrix;
+  // xRot12->rotateX(alfa1); 
   G4double pRmin12 = 20.00*cm;  // Diferente do primeiro anel
   G4double pRmax12 = 20.10*cm;
 
   G4Sphere* esf12 = new G4Sphere("esf12", pRmin12, pRmax12, pSPhi, pDPhi, pSTheta, pDTheta);
   G4LogicalVolume* esf_log12 = new G4LogicalVolume(esf12, H2O, "esf_log12", 0, 0, 0);
-  G4PVPlacement* esf_fis12 = new G4PVPlacement(xRot12, G4ThreeVector(0, 0, 0.0*mm), esf_log12, "esf12", logicWorld, false, 0);
+  G4PVPlacement* esf_fis12 = new G4PVPlacement(xRot, G4ThreeVector(0, 0, 0.0*mm), esf_log12, "esf12", logicWorld, false, 0);
 
 
   // Definindo volumes de pontuação

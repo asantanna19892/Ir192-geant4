@@ -56,7 +56,21 @@ SteppingAction::SteppingAction(EventAction* eventAction)
   : G4UserSteppingAction(),
   fEventAction(eventAction),
   fScoringVolume1(0),
-  fScoringVolume2(0)
+  fScoringVolume2(0),
+
+  // extrapolar todos os aneis
+  fScoringVolume3(0),
+  fScoringVolume4(0),
+  fScoringVolume5(0),
+  fScoringVolume6(0),
+  fScoringVolume7(0),
+  fScoringVolume8(0),
+  fScoringVolume9(0),
+  fScoringVolume10(0),
+  fScoringVolume11(0),
+  fScoringVolume12(0)
+
+
 { }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
